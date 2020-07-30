@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['**.heroku-app.com', '127.0.0.1', 'localhost']
 
@@ -40,13 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # app
+    # apps
     'contacts_api',
     'contacts',
 
-    # 3rd party app
+    # 3rd party installed apps
     'rest_framework',
     'drf_yasg',
+    'corsheaders'
 ]
 
 SWAGGER_SETTINGS = {
@@ -70,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -136,12 +138,28 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# CORS WHITELIST
+CORS_ORIGIN_WHITELIST = [
+    # "http://localhost:3000",
+    # "https://relaxed-curie-e9a516.netlify.app",
+    "http://127.0.0.1:8000"
+]
+
+# CORS_ORIGIN_REGEX_WHITELIST = [
+#      r"^https://\w+\.netlify\.app$",
+# ]
+
+
 # JWT
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
+
+# HEROKU SETTINGS
 django_heroku.settings(locals())
